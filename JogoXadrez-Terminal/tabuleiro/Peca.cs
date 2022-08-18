@@ -14,5 +14,10 @@
             Pos = null;
             QteDeMovimentos = 0;
         }
+
+        public void IncrementarQteDeMovimentos()
+        {
+            QteDeMovimentos++;
+        }
     }
 }

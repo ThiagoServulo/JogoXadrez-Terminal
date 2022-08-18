@@ -8,16 +8,29 @@ namespace JogoXadrez_Terminal
     {
         static void Main(string[] args)
         {
-            
-            Tabuleiro tab = new Tabuleiro(8, 8);
-            tab.ColocarPeca(new Torre(Cor.Preto, tab), new Posicao(0, 0));
-            tab.ColocarPeca(new Rei(Cor.Branco, tab), new Posicao(5, 5));
-            tab.ColocarPeca(new Cavalo(Cor.Preto, tab), new Posicao(1, 5));
-            tab.ColocarPeca(new Bispo(Cor.Preto, tab), new Posicao(5, 4));
-            Tela.ImprimirTabuleiro(tab);
-            
-            //PosicaoXadrez pos = new PosicaoXadrez('c', 7);
-            //Console.WriteLine(pos.ToPosicao());
+            try
+            {
+                PartidaDeXadrez partida = new PartidaDeXadrez();
+                Tela.ImprimirTabuleiro(partida.Tab);
+                while(!partida.Terminada)
+                {
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.Tab);
+                    Console.WriteLine();
+                    Console.Write("Origem: ");
+                    Posicao origem = Tela.LerPosicao().ToPosicao();
+                    Console.Write("Destino: ");
+                    Posicao destino = Tela.LerPosicao().ToPosicao();
+
+                    partida.ExecutaMovimento(origem, destino);
+                }
+                //PosicaoXadrez pos = new PosicaoXadrez('c', 7);
+                //Console.WriteLine(pos.ToPosicao());
+            }
+            catch(TabuleiroException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
