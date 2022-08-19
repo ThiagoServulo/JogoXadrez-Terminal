@@ -20,12 +20,33 @@
             QteDeMovimentos++;
         }
 
-        public bool PodeMover(Posicao pos)
+        public bool PodeMover(Posicao posicao)
         {
-            Peca peca = Tab.AcessarPeca(pos);
+            Peca peca = Tab.AcessarPeca(posicao);
             return ((peca == null) || (peca.CorDaPeca != CorDaPeca));
         }
 
+        public bool PodeMoverPara(Posicao posicao)
+        {
+            return MovimentosPossiveis()[posicao.Linha, posicao.Coluna];
+        }
+
         public abstract bool[,] MovimentosPossiveis();
+
+        public bool ExisteMovimentosPossiveis()
+        {
+            bool[,] matriz = MovimentosPossiveis();
+            for(int i = 0; i< Tab.Linhas; i++)
+            {
+                for (int j = 0; j < Tab.Colunas; j++)
+                {
+                    if(matriz[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
