@@ -2,9 +2,9 @@
 
 namespace xadrez
 {
-    class Bispo : Peca
+    class Bispo //: Peca
     {
-        public Bispo(Cor corDaPeca, Tabuleiro tab) : base(corDaPeca, tab)
+        public Bispo(Cor corDaPeca, Tabuleiro tab)// : base(corDaPeca, tab)
         {
         }
 

@@ -13,15 +13,34 @@ namespace JogoXadrez_Terminal
                 Console.Write($"{8 - i} ");
                 for (int j = 0; j < tab.Colunas; j++)
                 {
-                    if(tab.AcessarPeca(i, j) == null)
+                    ImprimirPeca(tab.AcessarPeca(i, j));
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("  a b c d e f g h");
+        }
+
+        public static void ImprimirTabuleiro(Tabuleiro tab, bool[,] posicoesPossiveis)
+        {
+            ConsoleColor fundoOriginal = Console.BackgroundColor;
+            ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
+
+            for (int i = 0; i < tab.Linhas; i++)
+            {
+                Console.Write($"{8 - i} ");
+                for (int j = 0; j < tab.Colunas; j++)
+                {
+                    if(posicoesPossiveis[i, j])
                     {
-                        Console.Write("- ");
+                        Console.BackgroundColor = fundoAlterado;
                     }
                     else
                     {
-                        ImprimirPeca(tab.AcessarPeca(i, j));
+                        Console.BackgroundColor = fundoOriginal;
                     }
+                    ImprimirPeca(tab.AcessarPeca(i, j));
                 }
+                Console.BackgroundColor = fundoOriginal;
                 Console.WriteLine();
             }
             Console.WriteLine("  a b c d e f g h");
@@ -29,17 +48,25 @@ namespace JogoXadrez_Terminal
 
         public static void ImprimirPeca(Peca peca)
         {
-            if(peca.CorDaPeca == Cor.Branco)
+            if(peca == null)
             {
-                Console.Write($"{peca} ");
+                Console.Write("-");
             }
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"{peca} ");
-                Console.ForegroundColor = aux;
+                if(peca.CorDaPeca == Cor.Branco)
+                {
+                    Console.Write($"{peca}");
+                }
+                else
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write($"{peca}");
+                    Console.ForegroundColor = aux;
+                }
             }
+            Console.Write(" ");
         }
 
         public static PosicaoXadrez LerPosicao()

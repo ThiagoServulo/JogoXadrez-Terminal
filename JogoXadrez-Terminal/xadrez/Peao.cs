@@ -2,9 +2,9 @@
 
 namespace xadrez
 {
-    class Peao : Peca
+    class Peao //: Peca
     {
-        public Peao(Cor corDaPeca, Tabuleiro tab) : base(corDaPeca, tab)
+        public Peao(Cor corDaPeca, Tabuleiro tab) //: base(corDaPeca, tab)
         {
         }
 

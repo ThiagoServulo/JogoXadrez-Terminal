@@ -19,13 +19,17 @@ namespace JogoXadrez_Terminal
                     Console.WriteLine();
                     Console.Write("Origem: ");
                     Posicao origem = Tela.LerPosicao().ToPosicao();
+
+                    bool[,] posicoesPossiveis = partida.Tab.AcessarPeca(origem).MovimentosPossiveis();
+
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.Tab, posicoesPossiveis);
+
                     Console.Write("Destino: ");
                     Posicao destino = Tela.LerPosicao().ToPosicao();
 
                     partida.ExecutaMovimento(origem, destino);
                 }
-                //PosicaoXadrez pos = new PosicaoXadrez('c', 7);
-                //Console.WriteLine(pos.ToPosicao());
             }
             catch(TabuleiroException e)
             {

@@ -30,7 +30,7 @@
                 throw new TabuleiroException("Já existe uma peça nessa posição!");
             }
             pecas[pos.Linha, pos.Coluna] = peca;
-            peca.Pos = pos;
+            peca.PosicaoAtual = pos;
         }
 
         public Peca RetirarPeca(Posicao pos)
@@ -40,7 +40,7 @@
                 return null;
             }
             Peca aux = AcessarPeca(pos);
-            aux.Pos = null;
+            aux.PosicaoAtual = null;
             pecas[pos.Linha, pos.Coluna] = null;
             return aux;
         }
