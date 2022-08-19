@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using tabuleiro;
 
 namespace xadrez
@@ -9,6 +9,8 @@ namespace xadrez
         public int Turno { get; private set; }
         public Cor JogadorAtual { get; private set; }
         public bool Terminada { get; private set; }
+        private HashSet<Peca> pecas;
+        private HashSet<Peca> pecasCapturadas;
 
         public PartidaDeXadrez()
         {
@@ -16,6 +18,8 @@ namespace xadrez
             Turno = 1;
             JogadorAtual = Cor.Branco;
             Terminada = false;
+            pecas = new HashSet<Peca>();
+            pecasCapturadas = new HashSet<Peca>();
             ColocarPecas();
         }
 
@@ -50,6 +54,10 @@ namespace xadrez
             Peca peca = Tab.RetirarPeca(origem);
             peca.IncrementarQteDeMovimentos();
             Peca pecaCapturada = Tab.RetirarPeca(destino);
+            if(pecaCapturada != null)
+            {
+                pecasCapturadas.Add(pecaCapturada);
+            }
             Tab.ColocarPeca(peca, destino);
         }
 
@@ -65,10 +73,43 @@ namespace xadrez
             JogadorAtual = (JogadorAtual == Cor.Branco) ? Cor.Preto : Cor.Branco;
         }
 
+        public void ColocarNovaPeca(char coluna, int linha, Peca peca)
+        {
+            Tab.ColocarPeca(peca, new PosicaoXadrez(coluna, linha).ToPosicao());
+            pecas.Add(peca);
+        }
+
         private void ColocarPecas()
         {
-            Tab.ColocarPeca(new Torre(Cor.Preto, Tab), new PosicaoXadrez('c', 1).ToPosicao());
-            Tab.ColocarPeca(new Rei(Cor.Branco, Tab), new PosicaoXadrez('c', 2).ToPosicao());
+            ColocarNovaPeca('c', 1, new Torre(Cor.Preto, Tab));
+            ColocarNovaPeca('c', 2, new Rei(Cor.Branco, Tab));
+        }
+
+        public HashSet<Peca> PecasCapturadas(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach(Peca peca in pecasCapturadas)
+            {
+                if(peca.CorDaPeca == cor)
+                {
+                    aux.Add(peca);
+                }
+            }
+            return aux;
+        }
+
+        public HashSet<Peca> PecasEmJogo(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca peca in pecas)
+            {
+                if (peca.CorDaPeca == cor)
+                {
+                    aux.Add(peca);
+                }
+            }
+            aux.ExceptWith(PecasCapturadas(cor));
+            return aux;
         }
     }
 }
