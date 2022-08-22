@@ -20,6 +20,11 @@
             QteDeMovimentos++;
         }
 
+        public void DecrementarQteDeMovimentos()
+        {
+            QteDeMovimentos--;
+        }
+
         public bool PodeMover(Posicao posicao)
         {
             Peca peca = Tab.AcessarPeca(posicao);
