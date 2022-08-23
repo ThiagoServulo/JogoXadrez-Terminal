@@ -39,6 +39,8 @@ namespace JogoXadrez_Terminal
                         Console.ReadLine();
                     }
                 }
+                Tela.ImprimirPartida(partida);
+
             }
             catch(TabuleiroException e)
             {

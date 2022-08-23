@@ -14,12 +14,20 @@ namespace JogoXadrez_Terminal
             Console.WriteLine();
             ImprimirPecasCapturadas(partida);
             Console.WriteLine();
-            Console.WriteLine($"\nTurno: {partida.Turno}");
-            Console.WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
-            Console.WriteLine();
-            if(partida.Xeque)
+            if(!partida.Terminada)
             {
-                Console.WriteLine("Você está em xeque!");
+                Console.WriteLine($"\nTurno: {partida.Turno}");
+                Console.WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+                Console.WriteLine();
+                if(partida.Xeque)
+                {
+                    Console.WriteLine("Você está em xeque!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Xeque mate!");
+                Console.WriteLine($"Vencedor: {partida.JogadorAtual}");
             }
             Console.WriteLine();
         }

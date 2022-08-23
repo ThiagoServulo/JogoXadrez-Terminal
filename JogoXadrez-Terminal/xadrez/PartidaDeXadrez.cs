@@ -89,6 +89,8 @@ namespace xadrez
 
             Xeque = EstaEmXeque(Adversaria(JogadorAtual));
 
+            Terminada = XequeMate(Adversaria(JogadorAtual));
+
             Turno++;
             MudaJogador();
         }
@@ -106,9 +108,11 @@ namespace xadrez
 
         private void ColocarPecas()
         {
-            ColocarNovaPeca('d', 3, new Torre(Cor.Preto, Tab));
-            ColocarNovaPeca('c', 2, new Rei(Cor.Branco, Tab));
-            ColocarNovaPeca('e', 5, new Rei(Cor.Preto, Tab));
+            ColocarNovaPeca('b', 3, new Torre(Cor.Preto, Tab));
+            ColocarNovaPeca('h', 7, new Torre(Cor.Preto, Tab));
+            ColocarNovaPeca('c', 8, new Torre(Cor.Branco, Tab));
+            ColocarNovaPeca('a', 8, new Rei(Cor.Branco, Tab));
+            ColocarNovaPeca('f', 1, new Rei(Cor.Preto, Tab));
         }
 
         public HashSet<Peca> PecasCapturadas(Cor cor)
@@ -174,6 +178,39 @@ namespace xadrez
             }
 
             return false;
+        }
+
+        public bool XequeMate(Cor cor)
+        {
+            if(!EstaEmXeque(cor))
+            {
+                return false;
+            }
+
+            foreach(Peca peca in PecasEmJogo(cor))
+            {
+                bool[,] matriz = peca.MovimentosPossiveis();
+                for(int i = 0; i < Tab.Linhas; i++)
+                {
+                    for (int j = 0; j < Tab.Colunas; j++)
+                    {
+                        if(matriz[i, j])
+                        {
+                            Posicao origem = peca.PosicaoAtual;
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = ExecutaMovimento(origem, destino);
+                            bool xeque = EstaEmXeque(cor);
+                            DesfazMovimento(origem, destino, pecaCapturada);
+                            if(!xeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }
