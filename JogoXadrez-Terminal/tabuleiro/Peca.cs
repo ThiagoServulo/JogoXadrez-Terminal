@@ -31,7 +31,7 @@
             return ((peca == null) || (peca.CorDaPeca != CorDaPeca));
         }
 
-        public bool PodeMoverPara(Posicao posicao)
+        public bool MovimentoPossivel(Posicao posicao)
         {
             return MovimentosPossiveis()[posicao.Linha, posicao.Coluna];
         }
